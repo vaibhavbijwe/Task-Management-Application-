@@ -1,5 +1,5 @@
 const router = require("express").router();
-const user = require("../models/user");
+const User = require("../models/user");
 
 //SIGN IN API
 router.post("/sign-in", async (req, res) =>{
@@ -7,27 +7,27 @@ router.post("/sign-in", async (req, res) =>{
         const { username } = req.body;
         const { email } = req.body;
     
-         const existinguser = await user.findOne({ username : username});
-         const existingemail = await user.findOne({email : email})
-         if (existinguser)
+         const existingUser = await User.findOne({ username : username});
+         const existingEmail = await User.findOne({email : email})
+         if (existingUser)
          {
             return res.status(400).json({ message: "Username already exixts"});
-         }else if (username.length < 3){
+         }else if (username.length < 4){
             return res.status(400).json({ message: "Username should have at least 4 Characters"});
          }
     
-         if (existingemail)
+         if (existingEmail)
          {
             return res.status(400).json({ message: "email already exixts"});
          }
     
-         const newuser = new user ({
-            username:req.body.username,
+         const newUser = new User ({
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password,
         })
-        await newuser.save();
-        return res.status(200)({message: "signIn Successfully"});
+        await newUser.save();
+        return res.status(200).json({message: "signIn Successfully"});
     }catch(error)
     {
         console.log(error);
