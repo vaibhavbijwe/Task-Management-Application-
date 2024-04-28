@@ -12,8 +12,6 @@ app.use("/", (req, res) => {
     res.send("Hello From Bacakend side");
 });
 
-//Localhost:1000/api/v1/sign-in
-
 const PORT = 1000;
 
 app.listen(PORT, () => {
